@@ -13,7 +13,7 @@
               {{ userName }}
             </v-list-item-title>
             <v-list-item-subtitle>
-              {{ user.cell }} - {{user.phone}}
+              {{ user.cell }} - {{ user.phone }}
             </v-list-item-subtitle>
             <v-list-item-subtitle>
               {{ user.email }}
@@ -61,7 +61,7 @@ export default {
         const response = await fetchUser();
         this.user = response.results[0];
       } catch (err) {
-        console.log(err);
+        console.warn(err);
       } finally {
         this.loading = false;
       }
