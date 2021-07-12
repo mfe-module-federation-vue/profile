@@ -13,6 +13,9 @@ module.exports = {
           "./Profile": "./src/components/Profile",
           './routes': './src/routes'
         },
+        remotes: {
+          root: process.env.REMOTE_ROOT
+        },
         shared: require("./package.json").dependencies,
       }),
     ],
