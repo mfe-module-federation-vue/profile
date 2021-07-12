@@ -1,12 +1,12 @@
 <template>
   <v-card v-if="!loading && user" height="150">
     <v-row class="pt-2 pl-2">
-      <v-col class="align-content-center" align-self="center" cols="2">
+      <v-col class="align-content-center" align-self="center" cols="4">
         <v-avatar align-self="center" class="profile" color="grey" size="124">
           <v-img align-self="center" :src="userPicture"></v-img>
         </v-avatar>
       </v-col>
-      <v-col align-self="start" cols="10">
+      <v-col align-self="start" cols="8">
         <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="text-h6">

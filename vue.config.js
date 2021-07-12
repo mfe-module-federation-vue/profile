@@ -11,6 +11,7 @@ module.exports = {
         filename: "remoteEntry.js",
         exposes: {
           "./Profile": "./src/components/Profile",
+          './routes': './src/routes'
         },
         shared: require("./package.json").dependencies,
       }),
