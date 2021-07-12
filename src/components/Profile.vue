@@ -61,7 +61,7 @@ export default {
         const response = await fetchUser();
         this.user = response.results[0];
       } catch (err) {
-        console.log(err);
+        console.warn(err);
       } finally {
         this.loading = false;
       }
