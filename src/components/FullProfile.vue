@@ -47,6 +47,7 @@ export default {
   },
   mounted() {
     this.loadUser();
+    console.log("profile", this.$store.getters["user/user"]);
   },
   computed: {
     userPicture() {
