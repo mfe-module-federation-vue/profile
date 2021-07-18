@@ -1,5 +1,11 @@
 <template>
   <v-card v-if="!loading && user" height="150">
+    <p>
+      {{
+        ($store && $store.getters && $store.getters["user/user"]) || "nothing"
+      }}
+    </p>
+
     <v-row class="pt-2 pl-2">
       <v-col class="align-content-center" align-self="center" cols="4">
         <v-avatar align-self="center" class="profile" color="grey" size="124">
