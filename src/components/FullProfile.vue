@@ -36,18 +36,22 @@
 
 <script>
 import { fetchUser } from "@/service/user.service.js";
+import emitter from "store/emitter";
 
 export default {
   name: "FullProfile",
   data() {
     return {
-      user: {},
+      user: null,
       loading: true,
     };
   },
   mounted() {
-    this.loadUser();
-    console.log("profile", this.$store.getters["user/user"]);
+    console.log("mounted");
+    emitter.listenEvent(emitter.EVENTS.USER, this.getUser);
+    console.log("listenEvent to USER");
+    emitter.sendEvent(emitter.EVENTS.GET_USER);
+    console.log("listenEvent to GET_USER");
   },
   computed: {
     userPicture() {
@@ -69,6 +73,15 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    getUser(user) {
+      console.log("recieve user", user);
+      if (!user) {
+        this.loadUser();
+        return;
+      }
+
+      this.user = user;
     },
   },
 };

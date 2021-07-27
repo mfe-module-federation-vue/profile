@@ -1,11 +1,5 @@
 <template>
   <v-card v-if="!loading && user" height="150">
-    <p>
-      {{
-        ($store && $store.getters && $store.getters["user/user"]) || "nothing"
-      }}
-    </p>
-
     <v-row class="pt-2 pl-2">
       <v-col class="align-content-center" align-self="center" cols="4">
         <v-avatar align-self="center" class="profile" color="grey" size="124">
@@ -40,17 +34,15 @@
 </template>
 <script>
 import { fetchUser } from "@/service/user.service.js";
+import emitter from "store/emitter";
 
 export default {
   name: "Profile",
 
   data: () => ({
-    user: {},
+    user: null,
     loading: true,
   }),
-  mounted() {
-    this.loadUser();
-  },
   computed: {
     userPicture() {
       return !this.loading && this.user ? this.user.picture.large : "";
@@ -60,6 +52,11 @@ export default {
         ? `${this.user.name.first} ${this.user.name.last}`
         : "";
     },
+  },
+  mounted() {
+    console.log(emitter);
+    emitter.listenEvent(emitter.EVENTS.USER, this.getUser);
+    emitter.sendEvent(emitter.EVENTS.GET_USER);
   },
   methods: {
     async loadUser() {
@@ -71,6 +68,17 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+
+    getUser(user) {
+      console.log("recieve user", user);
+      if (!user) {
+        this.loadUser();
+        return;
+      }
+
+      this.loading = false;
+      this.user = user;
     },
   },
 };
