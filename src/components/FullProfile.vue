@@ -1,5 +1,6 @@
 <template>
   <v-container class="custom__user-profile" fluid>
+    <v-btn @click="change">change</v-btn>
     <v-layout column>
       <v-card v-if="!loading && user">
         <v-flex class="custom__user-avatar justify-center">
@@ -36,6 +37,7 @@
 
 <script>
 import { fetchUser } from "@/service/user.service.js";
+import emitters from "store/emitters";
 
 export default {
   name: "FullProfile",
@@ -48,6 +50,12 @@ export default {
   mounted() {
     this.loadUser();
     console.log("profile", this.$store.getters["user/user"]);
+  },
+  created() {
+    console.log(
+      "created life cicly - userData - Profile: ",
+      emitters.helpers.userData().name.first
+    );
   },
   computed: {
     userPicture() {
@@ -69,6 +77,9 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    async change() {
+      await emitters.services.setUser();
     },
   },
 };
