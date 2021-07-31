@@ -50,7 +50,8 @@ export default {
   mounted() {
     this.loadUser();
     console.log("profile", this.$store.getters["user/user"]);
-    gtag("event", "profile - action", {
+
+    window.gtag("event", "profile - action", {
       event_category: "<category>",
       event_label: " <label>",
       value: "<value>",
