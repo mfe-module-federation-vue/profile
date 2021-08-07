@@ -16,6 +16,7 @@ module.exports = {
         remotes: {
           root: process.env.REMOTE_ROOT,
           store: process.env.REMOTE_STORE,
+          auth: process.env.REMOTE_AUTH,
         },
         shared: require("./package.json").dependencies,
       }),

@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import { fetchUser } from "@/service/user.service.js";
-import emitters from "store/emitters";
+import UserTools from "auth/UserTools";
 
 export default {
   name: "FullProfile",
@@ -54,7 +53,7 @@ export default {
   created() {
     console.log(
       "created life cicly - userData - Profile: ",
-      emitters.helpers.userData().name.first
+      UserTools.storage.userData()?.name?.first
     );
   },
   computed: {
@@ -70,8 +69,7 @@ export default {
   methods: {
     async loadUser() {
       try {
-        const response = await fetchUser();
-        this.user = response.results[0];
+        this.user = UserTools.storage.userData();
       } catch (err) {
         console.warn(err);
       } finally {
@@ -79,7 +77,12 @@ export default {
       }
     },
     async change() {
-      await emitters.services.setUser();
+      try {
+        await UserTools.service.changeUser();
+        this.user = UserTools.storage.userData();
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
