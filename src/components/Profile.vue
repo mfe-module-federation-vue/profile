@@ -24,11 +24,11 @@
             <v-list-item-subtitle>
               {{ user.email }}
             </v-list-item-subtitle>
-            <v-list-item-subtitle>
+            <v-list-item-subtitle v-if="user.location">
               {{ user.location.street.number }},
               {{ user.location.street.name }}
             </v-list-item-subtitle>
-            <v-list-item-subtitle>
+            <v-list-item-subtitle v-if="user.location">
               {{ user.location.city }} -
               {{ user.location.state }}
             </v-list-item-subtitle>
@@ -39,7 +39,7 @@
   </v-card>
 </template>
 <script>
-import { fetchUser } from "@/service/user.service.js";
+import { emitter, EVENT_KEYS, userData } from "../dealful";
 
 export default {
   name: "Profile",
@@ -50,6 +50,9 @@ export default {
   }),
   mounted() {
     this.loadUser();
+    emitter.on(EVENT_KEYS.CHANGE_USER, (newUserData) => {
+      this.user = newUserData();
+    });
   },
   computed: {
     userPicture() {
@@ -64,8 +67,7 @@ export default {
   methods: {
     async loadUser() {
       try {
-        const response = await fetchUser();
-        this.user = response.results[0];
+        this.user = userData();
       } catch (err) {
         console.warn(err);
       } finally {

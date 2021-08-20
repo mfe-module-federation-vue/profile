@@ -37,6 +37,7 @@
 
 <script>
 import UserTools from "auth/UserTools";
+import { emitter, EVENT_KEYS, userData } from "../dealful";
 
 export default {
   name: "FullProfile",
@@ -49,11 +50,15 @@ export default {
   mounted() {
     this.loadUser();
     console.log("profile", this.$store.getters["user/user"]);
+
+    emitter.on(EVENT_KEYS.CHANGE_USER, (newUserData) => {
+      this.user = newUserData();
+    });
   },
   created() {
     console.log(
       "created life cicly - userData - Profile: ",
-      UserTools.storage.userData()?.name?.first
+      userData()?.name?.first
     );
   },
   computed: {
@@ -69,7 +74,7 @@ export default {
   methods: {
     async loadUser() {
       try {
-        this.user = UserTools.storage.userData();
+        this.user = userData();
       } catch (err) {
         console.warn(err);
       } finally {
@@ -79,7 +84,7 @@ export default {
     async change() {
       try {
         await UserTools.service.changeUser();
-        this.user = UserTools.storage.userData();
+        this.user = userData();
       } catch (error) {
         console.error(error);
       }
