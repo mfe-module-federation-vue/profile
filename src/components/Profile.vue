@@ -43,7 +43,6 @@ import { emitter, EVENT_KEYS, userData } from "../dealful";
 
 export default {
   name: "Profile",
-
   data: () => ({
     user: {},
     loading: true,

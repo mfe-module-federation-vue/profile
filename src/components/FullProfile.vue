@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import UserTools from "auth/UserTools";
 import { emitter, EVENT_KEYS, userData } from "../dealful";
+import { changeUser } from "../service/user.service";
 
 export default {
   name: "FullProfile",
@@ -54,12 +54,6 @@ export default {
     emitter.on(EVENT_KEYS.CHANGE_USER, (newUserData) => {
       this.user = newUserData();
     });
-  },
-  created() {
-    console.log(
-      "created life cicly - userData - Profile: ",
-      userData()?.name?.first
-    );
   },
   computed: {
     userPicture() {
@@ -83,7 +77,7 @@ export default {
     },
     async change() {
       try {
-        await UserTools.service.changeUser();
+        await changeUser();
         this.user = userData();
       } catch (error) {
         console.error(error);
