@@ -1,16 +1,8 @@
 <template>
   <v-card v-if="!loading && user" height="150">
-    <p>
-      {{
-        ($store && $store.getters && $store.getters["user/user"]) || "nothing"
-      }}
-    </p>
-
     <v-row class="pt-2 pl-2">
       <v-col class="align-content-center" align-self="center" cols="4">
-        <v-avatar align-self="center" class="profile" color="grey" size="124">
-          <v-img align-self="center" :src="userPicture"></v-img>
-        </v-avatar>
+        <DSUserPicture :src="userPicture" />
       </v-col>
       <v-col align-self="start" cols="8">
         <v-list-item>
@@ -39,11 +31,12 @@
   </v-card>
 </template>
 <script>
-import { fetchUser } from "@/service/user.service.js";
+import UserTools from "auth/UserTools";
+import DSUserPicture from "ds/DSUserPicture";
 
 export default {
   name: "Profile",
-
+  components: { DSUserPicture },
   data: () => ({
     user: {},
     loading: true,
@@ -64,8 +57,7 @@ export default {
   methods: {
     async loadUser() {
       try {
-        const response = await fetchUser();
-        this.user = response.results[0];
+        this.user = UserTools.storage.userData();
       } catch (err) {
         console.warn(err);
       } finally {
