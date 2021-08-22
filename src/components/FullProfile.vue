@@ -47,11 +47,20 @@ export default {
   mounted() {
     this.loadUser();
     console.log("profile", this.$store.getters["user/user"]);
+
+    window.gtag("event", "profile - action", {
+      event_category: "<category>",
+      event_label: " <label>",
+      value: "<value>",
+    });
   },
   created() {
+    console.log("%c mixin - profile", "color: green", this.$mode);
+    console.log("%c $router - profile", "color: green", this.$router);
     console.log(
-      "created life cicly - userData - Profile: ",
-      UserTools.storage.userData()?.name?.first
+      "%c created life cicly - userData - Profile: ",
+      "color: #bada55;",
+      emitters.helpers.userData().name.first
     );
   },
   computed: {
