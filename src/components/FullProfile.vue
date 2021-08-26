@@ -1,34 +1,24 @@
 <template>
   <v-container class="custom__user-profile" fluid>
-    <v-btn @click="change">change</v-btn>
     <v-layout column>
       <v-card v-if="!loading && user">
         <v-flex class="custom__user-avatar justify-center">
-          <v-avatar size="124" class="mr-4 elevation-6">
-            <img :src="user.picture.large" alt="Avatar" />
-          </v-avatar>
+          <DSUserPicture :src="user.picture.large" />
         </v-flex>
         <v-card-text class="custom__user-content">
-          <v-text-field
-            v-model="user.name.first"
-            label="FirstName"
-          ></v-text-field>
-          <v-text-field
-            v-model="user.name.last"
-            label="Last Name"
-          ></v-text-field>
-          <v-text-field
-            v-model="user.email"
-            label="Email Address"
-          ></v-text-field>
-          <v-text-field v-model="user.cell" label="Mobile"></v-text-field>
-          <v-text-field v-model="user.phone" label="Phone"></v-text-field>
+          <DSInput v-model="user.name.first" label="FirstName"></DSInput>
+          <DSInput v-model="user.name.last" label="Last Name"></DSInput>
+          <DSInput v-model="user.email" label="Email Address"></DSInput>
+          <DSInput v-model="user.cell" label="Mobile"></DSInput>
+          <DSInput v-model="user.phone" label="Phone"></DSInput>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" :loading="loading" @click.native="update">
+          <DSButton @click="change"> Change User </DSButton>
+
+          <DSButton :loading="loading" @click.native="update">
             <v-icon left dark>mdi-check</v-icon>
             Save Changes
-          </v-btn>
+          </DSButton>
         </v-card-actions>
       </v-card>
     </v-layout>
@@ -38,9 +28,17 @@
 <script>
 import { emitter, EVENT_KEYS, userData } from "../dealful";
 import { changeUser } from "../service/user.service";
+import DSButton from "ds/DSButton";
+import DSInput from "ds/DSInput";
+import DSUserPicture from "ds/DSUserPicture";
 
 export default {
   name: "FullProfile",
+  components: {
+    DSButton,
+    DSInput,
+    DSUserPicture,
+  },
   data() {
     return {
       user: {},

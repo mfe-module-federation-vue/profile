@@ -1,5 +1,5 @@
 {
-  "name": "@microfrontend-vue/profile",
+  "name": "@mfe-module-federation-vue/profile",
   "version": "0.1.0",
   "private": true,
   "scripts": {
