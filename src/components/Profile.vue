@@ -16,11 +16,11 @@
             <v-list-item-subtitle>
               {{ user.email }}
             </v-list-item-subtitle>
-            <v-list-item-subtitle>
+            <v-list-item-subtitle v-if="user.location">
               {{ user.location.street.number }},
               {{ user.location.street.name }}
             </v-list-item-subtitle>
-            <v-list-item-subtitle>
+            <v-list-item-subtitle v-if="user.location">
               {{ user.location.city }} -
               {{ user.location.state }}
             </v-list-item-subtitle>
@@ -31,7 +31,7 @@
   </v-card>
 </template>
 <script>
-import UserTools from "auth/UserTools";
+import { emitter, EVENT_KEYS, userData } from "../dealful";
 import DSUserPicture from "ds/DSUserPicture";
 
 export default {
@@ -43,6 +43,9 @@ export default {
   }),
   mounted() {
     this.loadUser();
+    emitter.on(EVENT_KEYS.CHANGE_USER, (newUserData) => {
+      this.user = newUserData();
+    });
   },
   computed: {
     userPicture() {
@@ -57,7 +60,7 @@ export default {
   methods: {
     async loadUser() {
       try {
-        this.user = UserTools.storage.userData();
+        this.user = userData();
       } catch (err) {
         console.warn(err);
       } finally {

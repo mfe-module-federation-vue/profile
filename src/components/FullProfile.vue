@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import UserTools from "auth/UserTools";
+import { emitter, EVENT_KEYS, userData } from "../dealful";
+import { changeUser } from "../service/user.service";
 import DSButton from "ds/DSButton";
 import DSInput from "ds/DSInput";
 import DSUserPicture from "ds/DSUserPicture";
@@ -48,20 +49,9 @@ export default {
     this.loadUser();
     console.log("profile", this.$store.getters["user/user"]);
 
-    window.gtag("event", "profile - action", {
-      event_category: "<category>",
-      event_label: " <label>",
-      value: "<value>",
+    emitter.on(EVENT_KEYS.CHANGE_USER, (newUserData) => {
+      this.user = newUserData();
     });
-  },
-  created() {
-    console.log("%c mixin - profile", "color: green", this.$mode);
-    console.log("%c $router - profile", "color: green", this.$router);
-    console.log(
-      "%c created life cicly - userData - Profile: ",
-      "color: #bada55;",
-      emitters.helpers.userData().name.first
-    );
   },
   computed: {
     userPicture() {
@@ -76,7 +66,7 @@ export default {
   methods: {
     async loadUser() {
       try {
-        this.user = UserTools.storage.userData();
+        this.user = userData();
       } catch (err) {
         console.warn(err);
       } finally {
@@ -85,8 +75,8 @@ export default {
     },
     async change() {
       try {
-        await UserTools.service.changeUser();
-        this.user = UserTools.storage.userData();
+        await changeUser();
+        this.user = userData();
       } catch (error) {
         console.error(error);
       }
