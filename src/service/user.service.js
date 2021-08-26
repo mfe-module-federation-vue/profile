@@ -20,14 +20,3 @@ export const changeUser = async () => {
     console.error("user set erro request", error);
   }
 };
-
-export const fetchUser = () => {
-  return new Promise((resolve, reject) => {
-    fetch("https://randomuser.me/api/")
-      .then((res) => res.json())
-      .then((user) => {
-        resolve(user);
-      })
-      .catch(reject);
-  });
-};
