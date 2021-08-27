@@ -1,5 +1,6 @@
 const ModuleFederationPlugin = require("webpack").container
   .ModuleFederationPlugin;
+const dependencies = require("./package.json").dependencies;
 
 module.exports = {
   publicPath: process.env.PUBLIC_PATH,
@@ -18,7 +19,19 @@ module.exports = {
           auth: process.env.REMOTE_AUTH,
           ds: process.env.REMOTE_DS,
         },
-        shared: require("./package.json").dependencies,
+        shared: {
+          vuetify: {
+            singleton: true,
+          },
+          vue: {
+            singleton: true,
+          },
+          "@mfe-module-federation-vue/dealful-package": {
+            requiredVersion:
+              dependencies["@mfe-module-federation-vue/dealful-package"],
+            singleton: true, // only a single version of the shared module is allowed
+          },
+        },
       }),
     ],
   },
