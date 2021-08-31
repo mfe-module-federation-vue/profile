@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { emitter, EVENT_KEYS, userData } from "../dealful";
+import { userData } from "../dealful";
 import { changeUser } from "../service/user.service";
 import DSButton from "ds/DSButton";
 import DSInput from "ds/DSInput";
@@ -47,9 +47,6 @@ export default {
   },
   mounted() {
     this.loadUser();
-    emitter.on(EVENT_KEYS.CHANGE_USER, (newUserData) => {
-      this.user = newUserData();
-    });
   },
   computed: {
     userPicture() {
