@@ -31,7 +31,8 @@
   </v-card>
 </template>
 <script>
-import { emitter, EVENT_KEYS, userData } from "../dealful";
+import { emitter, EVENT_KEYS } from "../dealful";
+import { userData } from "../service/storage";
 import DSUserPicture from "ds/DSUserPicture";
 
 export default {

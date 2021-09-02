@@ -12,8 +12,7 @@ export const changeUser = async () => {
       },
     };
     localStorage.setItem(STORAGE_KEYS.USER_DATA, JSON.stringify(fakeUserData));
-    console.log("%c set user called - store", "color: red;");
-    return await emitter.emit(EVENT_KEYS.CHANGE_USER, () => {
+    return emitter.emit(EVENT_KEYS.CHANGE_USER, () => {
       return fakeUserData;
     });
   } catch (error) {

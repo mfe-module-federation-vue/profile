@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { userData } from "../dealful";
+import { userData } from "../service/storage";
 import { changeUser } from "../service/user.service";
 import DSButton from "ds/DSButton";
 import DSInput from "ds/DSInput";
